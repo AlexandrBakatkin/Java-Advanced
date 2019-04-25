@@ -1,7 +1,7 @@
 public class Team {
     private String name;
     private Competitor [] team;
-    boolean start;                  //Для проверки - проходила ли команда полосу препятствий хоть один раз
+    private boolean start;                  //Для проверки - проходила ли команда полосу препятствий хоть один раз
 
     public Team(String name, Competitor ... competitor) {
         this.name = name;
