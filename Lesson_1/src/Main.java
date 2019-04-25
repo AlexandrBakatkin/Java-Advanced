@@ -1,8 +1,8 @@
 public class Main {
     public static void main(String[] args) {
 
-        Team team = new Team("Динамо", new Dog ("Bim"), new Cat ("Barsik"));
-        Course course = new Course(new Cross(200), new Water (50), new Wall(3));
+        Team team = new Team("Динамо", new Dog ("Bim"), new Cat ("Barsik"), new Human("Alex"));
+        Course course = new Course(new Cross(200), new Water (2), new Wall(3));
 
         team.teamInfo();        //общая информация о команде
         System.out.println("____________________");
