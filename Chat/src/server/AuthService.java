@@ -37,4 +37,30 @@ public class AuthService {
         }
         return null;
     }
+
+    public static String[] getBlackListbyNick (String nick){
+        String sql = String.format("SELECT blacklist FROM main WHERE nickname = '%s'", nick);
+        try {
+            ResultSet rs = stmt.executeQuery(sql);
+            if(rs.next()){
+                String temp = rs.getString(1);
+                if (temp != null){
+                    String [] blackNick = temp.split(" ");
+                    return blackNick;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void saveBlackList (String nicks, String nick){
+        String sql = String.format("UPDATE main SET blacklist = '%s' WHERE nickname = '%s'", nicks, nick);
+        try {
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

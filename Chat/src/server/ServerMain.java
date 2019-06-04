@@ -45,9 +45,9 @@ public class ServerMain {
         }
     }
 
-    public void broadcastMsg(String msg){
+    public void broadcastMsg(ClientHandler from, String msg){
         for (ClientHandler o: clients) {
-            o.sendMsg(msg);
+            if (!o.checkBlackList(from.getNick())){o.sendMsg(msg);}
         }
     }
 
@@ -70,9 +70,31 @@ public class ServerMain {
 
     public void loginUser (ClientHandler client){
         clients.add(client);
+        broadcastClientList();
     }
 
     public void logoutUser (ClientHandler client){
         clients.remove(client);
+        broadcastClientList();
+    }
+
+    public void broadcastClientList() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("/clientlist ");
+
+        for (ClientHandler o : clients) {
+            sb.append(o.getNick() + " ");
+        }
+
+        String out = sb.toString();
+        for (ClientHandler o : clients) {
+            o.sendMsg(out);
+        }
+    }
+
+    public void sendPrivateMessage(ClientHandler from, ClientHandler to, String message) {
+        if (!to.checkBlackList(from.getNick())) {
+            to.sendMsg(message);
+        }
     }
 }
