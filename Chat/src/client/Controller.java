@@ -1,10 +1,8 @@
 package client;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 
 import java.io.DataInputStream;
@@ -39,6 +37,9 @@ public class Controller {
     @FXML
     Button authButton;
 
+    @FXML
+    ListView<String> clientList;
+
     private boolean isAuthorized;
 
     Socket socket;
@@ -55,11 +56,15 @@ public class Controller {
             upperPanel.setManaged(true);
             bottomPanel.setManaged(false);
             bottomPanel.setVisible(false);
+            clientList.setVisible(false);
+            clientList.setManaged(false);
         } else {
             upperPanel.setVisible(false);
             upperPanel.setManaged(false);
             bottomPanel.setManaged(true);
             bottomPanel.setVisible(true);
+            clientList.setVisible(true);
+            clientList.setManaged(true);
         }
     }
 
@@ -101,6 +106,19 @@ public class Controller {
                                 break;
                             }
                             textArea.appendText(str + "\n");
+                            if(str.startsWith("/clientlist")) {
+                                String[] tokens = str.split(" ");
+
+                                Platform.runLater(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        clientList.getItems().clear();
+                                        for (int i = 1; i < tokens.length; i++) {
+                                            clientList.getItems().add(tokens[i]);
+                                        }
+                                    }
+                                });
+                            }
                         }
                     } catch (IOException e) {
                         e.printStackTrace();

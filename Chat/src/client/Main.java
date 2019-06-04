@@ -19,7 +19,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("client.fxml"));
         primaryStage.setTitle("Сетевой чат");
-        primaryStage.initStyle(StageStyle.TRANSPARENT);
+        primaryStage.initStyle(StageStyle.DECORATED);
         root.setStyle(
                 "-fx-background-color: rgba(255, 255, 255, 0.8);" +
                         "-fx-effect: dropshadow(gaussian, grey, 30, 0, 0, 0);" +
